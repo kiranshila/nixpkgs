@@ -2,11 +2,11 @@
   lib,
   fetchFromGitHub,
   cmake,
-  llvmPackages,
+  llvmPackages_16,
   git,
 }:
-llvmPackages.stdenv.mkDerivation rec {
-  pname = "enzyme";
+llvmPackages_16.stdenv.mkDerivation rec {
+  pname = "enzyme_16";
   version = "0.0.172";
 
   src = fetchFromGitHub {
@@ -20,8 +20,8 @@ llvmPackages.stdenv.mkDerivation rec {
     patchShebangs enzyme
   '';
 
-  llvm = llvmPackages.llvm;
-  clang = llvmPackages.clang-unwrapped;
+  llvm = llvmPackages_16.llvm;
+  clang = llvmPackages_16.clang-unwrapped;
 
   buildInputs = [
     cmake

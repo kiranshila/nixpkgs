@@ -3,6 +3,7 @@
   stdenv,
   fetchzip,
   cmake,
+  gfortran,
 }:
 stdenv.mkDerivation rec {
   pname = "calceph";
@@ -12,7 +13,14 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-s42PQd2LEN+zwglNDjhUoofv+RdVyvpD3Pk0EaNAFSM=";
   };
 
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [
+    cmake
+    gfortran
+  ];
+
+  cmakeFlags = [
+    (lib.cmakeBool "BUILD_SHARED_LIBS" (!stdenv.hostPlatform.isStatic))
+  ];
 
   meta = {
     homepage = "https://www.imcce.fr/inpop/calceph/";
@@ -22,7 +30,7 @@ stdenv.mkDerivation rec {
       cecill-b
       cecill-c
     ];
-    maintainers = with lib.maintainers; [ kiranshila ];
+    maintainers = with lib.maintainers; [kiranshila];
     platforms = lib.platforms.all;
   };
 }
